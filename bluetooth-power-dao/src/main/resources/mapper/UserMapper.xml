@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topband.bluetooth.dao.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.topband.bluetooth.entity.User">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="user_type" jdbcType="INTEGER" property="userType" />
+    <result column="del_flag" jdbcType="INTEGER" property="delFlag" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_name, password, phone, email, user_type, del_flag, create_by, update_by, 
+    create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from w_user
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from w_user
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.topband.bluetooth.entity.User">
+    insert into w_user (id, user_name, password, 
+      phone, email, user_type, 
+      del_flag, create_by, update_by, 
+      create_time, update_time)
+    values (#{id,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, 
+      #{delFlag,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.topband.bluetooth.entity.User">
+    insert into w_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="userType != null">
+        user_type,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.topband.bluetooth.entity.User">
+    update w_user
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        user_type = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.topband.bluetooth.entity.User">
+    update w_user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=INTEGER},
+      del_flag = #{delFlag,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

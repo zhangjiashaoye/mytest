@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: licensingservice
+  profiles:
+    active: "${LICENSE_PROFILE_ACTIVE:dev}"
+  cloud:
+    nacos:
+      config:
+        # config的配置必须放在bootstrap中
+        # 配置文件所属namespace
+        namespace: "${CONFIG_SERVER_NAMESPACE:6ba9d4c9-e0ba-4bc2-84a1-0702f815552a}"
+        # nacos服务地址
+        server-addr: "${CONFIG_SERVER_ADDR:192.168.26.121:8848}"
+        # 配置文件扩展名
+        file-extension: yml
+        # 配置文件所属组，默认为DEFAULT_GROUP。默认组支持配置的动态更新
+        group: DEFAULT_GROUP
+        # 从nacos获取配置的超时时间
+        timeout: 3000
+

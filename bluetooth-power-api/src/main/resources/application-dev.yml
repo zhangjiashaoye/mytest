@@ -1,0 +1,79 @@
+spring:
+  datasource:
+    url: jdbc:mysql://${LICENSE_DB_HOST:192.168.3.64}:3306/bluetooth_power?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    username: ${LICENSE_DB_USER:root}
+    password: ${LICENSE_DB_PASSWD:orvibo888}
+    driver-class-name: com.mysql.jdbc.Driver
+    # durid相对dbcp,c3p0性能要高，相对于HikariCP扩展性好
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      # 连接池的配置信息
+      # 初始化大小，最小，最大
+      initial-size: 5
+      min-idle: 5
+      max-active: 30
+      # 配置获取连接等待超时的时间
+      max-wait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 300000
+      validation-query: select 'x'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      pool-prepared-statements: true
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall
+      max-pool-prepared-statement-per-connection-size: 20
+      use-global-data-source-stat: true
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+      # 监控服务器配置
+      stat-view-servlet:
+        # IP白名单
+        #allow: 127.0.0.1,192.168.3.120/24,192.168.8.120/24
+        # IP黑名单 指定了子网掩码，则限定指定的子网里的所有ip， 如192.168.1.120/24 就相当于192.168.1.*
+        #deny: 192.168.18.12/24
+        # 添加控制台管理用户，控制台访问地址：http://localhost:8806/druid/
+        login-username: nacos
+        login-password: nacos
+        reset-enable: false
+      # 配置服务过滤器
+      web-stat-filter:
+        # 过滤规则
+        urlPattern: /
+        # 忽略过滤格式
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+
+  redis:
+    # 开启集群或者哨兵模式会覆盖单机配置
+    # 集群模式
+    cluster:
+#      # （普通集群，不使用则不用开启）在群集中执行命令时要遵循的最大重定向数目。
+      max-redirects: ${REDIS_CLUSTER_REDIRECTS:5}
+#      # （普通集群，不使用则不用开启）以逗号分隔的"主机:端口"对列表进行引导。
+      nodes: ${REDIS_CLUSTER_NODES:192.168.26.119:7000,192.168.26.119:7001,192.168.26.119:7002,192.168.26.119:7003,192.168.26.119:7004,192.168.26.119:7005,192.168.26.119:7006,192.168.26.119:7007}
+#    # 哨兵模式
+#    sentinel:
+#      # （哨兵模式，不使用则不用开启）Redis服务器的名称。
+#      master: ${REDIS_SENTINEL_MASTER:}
+#      # （哨兵模式，不使用则不用开启）"主机:端口"对的逗号分隔列表。
+#      nodes: ${REDIS_SENTINEL_NODES:}
+    # 连接工厂使用的数据库索引
+    database: ${REDIS_DATABASE:0}
+    password: ${REDIS_PASSWORD:redisBNH76@#y}
+    ssl: false
+    lettuce:
+      pool:
+        max-active: ${REDIS_POOL_MAX_ACTIVE:8}
+        max-idle: ${REDIS_POOL_MAX_IDLE:8}
+        max-wait: ${REDIS_POOL_MAX_WAIT:-1ms}
+        min-idle: ${REDIS_POOL_MIN_IDLE:0}
+
+  rabbitmq:
+    addresses: ${RABBIT_ADDRESSES:192.168.26.119:5672}
+    username: ${RABBIT_USER:eph}
+    password: ${RABBIT_PASSWORD:eph@#123}
+    virtual-host: ${RABBIT_VIRTUAL_HOST:eph}
